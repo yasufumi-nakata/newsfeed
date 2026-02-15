@@ -56,7 +56,9 @@ HTML = """<!doctype html>
         radial-gradient(circle at 100% 100%, rgba(71, 149, 221, 0.30), transparent 55%),
         linear-gradient(150deg, var(--bg-1), var(--bg-2));
       color: var(--text);
-      font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+      font-family: "SF Pro Text", "Hiragino Sans", "Noto Sans JP", "Segoe UI", sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
       display: grid;
       grid-template-rows: auto 1fr;
       overflow: hidden;
@@ -79,7 +81,7 @@ HTML = """<!doctype html>
 
     .title {
       font-size: clamp(1.55rem, 3.8vw, 2.7rem);
-      font-weight: 900;
+      font-weight: 700;
       letter-spacing: 0.035em;
       text-transform: uppercase;
     }
@@ -89,7 +91,7 @@ HTML = """<!doctype html>
       color: var(--muted);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .meta-row {
@@ -98,6 +100,7 @@ HTML = """<!doctype html>
       flex-wrap: wrap;
       color: var(--muted);
       font-size: clamp(0.95rem, 1.35vw, 1.18rem);
+      font-weight: 500;
     }
 
     .pill {
@@ -165,7 +168,7 @@ HTML = """<!doctype html>
       font-size: clamp(0.95rem, 1.35vw, 1.15rem);
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      font-weight: 800;
+      font-weight: 600;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -173,8 +176,8 @@ HTML = """<!doctype html>
 
     .story-title {
       font-size: clamp(1.28rem, 2.15vw, 1.95rem);
-      line-height: 1.18;
-      font-weight: 900;
+      line-height: 1.24;
+      font-weight: 700;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -184,7 +187,8 @@ HTML = """<!doctype html>
     .story-summary {
       color: #deebf8;
       font-size: clamp(1.02rem, 1.36vw, 1.24rem);
-      line-height: 1.3;
+      line-height: 1.35;
+      font-weight: 500;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -195,6 +199,7 @@ HTML = """<!doctype html>
       color: var(--muted);
       font-size: clamp(0.95rem, 1.2vw, 1.05rem);
       font-variant-numeric: tabular-nums;
+      font-weight: 500;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -270,7 +275,7 @@ HTML = """<!doctype html>
     <section class="stream" id="stream" aria-live="polite"></section>
   </main>
   <script>
-    const DISPLAY_ADVANCE_SECONDS = 18;
+    const DISPLAY_ADVANCE_SECONDS = 120;
 
     let queue = [];
     let visibleEntries = [];
