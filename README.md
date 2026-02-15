@@ -48,3 +48,10 @@ python3 rss_signage.py "https://feeds.bbci.co.uk/news/rss.xml" "https://rss.nyti
 - `--limit 240` keep many headlines
 - `--refresh-seconds 60` poll feeds every 60 seconds
 - `--insecure` disable SSL verification (use only when your environment has cert issues)
+
+## Public repo safety
+
+- Do not commit secrets (`.env`, API tokens in URLs, certificate/private key files).
+- Keep private feed URLs in `feeds.local.txt` and run with:
+  `python3 rss_signage.py --feeds-file feeds.local.txt`
+- If a secret was ever committed, rotate it and rewrite git history before publishing.
