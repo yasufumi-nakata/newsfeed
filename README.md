@@ -2,22 +2,30 @@
 
 Fetch RSS/Atom feeds and show them in an auto-updating signage screen.
 
+## Install
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e .
+```
+
 ## 1) CLI fetch
 
 ```bash
-python3 rss_news.py "https://feeds.bbci.co.uk/news/rss.xml" --limit 10
+rss-news "https://feeds.bbci.co.uk/news/rss.xml" --limit 10
 ```
 
 JSON output:
 
 ```bash
-python3 rss_news.py "https://feeds.bbci.co.uk/news/rss.xml" --json
+rss-news "https://feeds.bbci.co.uk/news/rss.xml" --json
 ```
 
 ## 2) Signage mode (auto refresh, English news wall)
 
 ```bash
-python3 rss_signage.py --refresh-seconds 300 --port 8080 --insecure
+rss-signage --refresh-seconds 300 --port 8080 --insecure
 ```
 
 Open:
@@ -33,13 +41,13 @@ Default behavior:
 Use your own feeds file:
 
 ```bash
-python3 rss_signage.py --feeds-file feeds.txt
+rss-signage --feeds-file feeds.txt
 ```
 
 Or pass feeds directly:
 
 ```bash
-python3 rss_signage.py "https://feeds.bbci.co.uk/news/rss.xml" "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+rss-signage "https://feeds.bbci.co.uk/news/rss.xml" "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
 ```
 
 ## Useful flags
