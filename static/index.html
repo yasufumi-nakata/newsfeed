@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1627">
+  <title>Daily Quest | ownnewsfeed</title>
+  <link rel="stylesheet" href="/dashboard.css">
+  <script src="/dashboard.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✦</span><div>ownnewsfeed <span class="brand-divider">/</span> <strong>Daily Quest</strong></div></div>
+    <div class="header-right"><time id="clock">今日の積み重ねを、力に。</time><label class="text-size-control">文字<select id="text-size" aria-label="文字の大きさ"><option value="large">大きめ</option><option value="extra">特大</option></select></label><button id="refresh" class="quiet-button">↻ 更新</button></div>
+  </header>
+  <main>
+    <section class="overview" aria-label="レベルと今日の経験値">
+      <div class="level-summary">
+        <div class="level-medal"><span>LEVEL</span><strong id="level">—</strong></div>
+        <div class="level-details"><div class="level-line"><h1 id="stage-heading">今日のクエスト</h1><span id="total-xp">累計 — XP</span></div><progress id="level-progress" max="100" value="0" aria-label="次の総合レベルまでの経験値"></progress><div class="level-caption"><span id="next-level">読み込み中…</span><span>100 XP / レベル</span></div></div>
+      </div>
+      <div class="stat"><span>今日の獲得</span><strong id="today-xp">— <small>XP</small></strong><span id="xp-breakdown">クエスト + Todoist</span></div>
+      <div class="stat"><span id="quest-count-label">通常クエスト達成</span><strong id="quest-count">— <small>/ 11</small></strong></div>
+      <div class="stat"><span>Todoist 完了</span><strong id="todoist-count">— <small>件</small></strong><span>1タスク +10 XP / 日</span></div>
+    </section>
+
+    <div class="workspace">
+      <section class="panel quests-panel" aria-labelledby="quests-heading">
+        <div class="panel-heading"><div><span class="section-number">01</span><h2 id="quests-heading">デイリークエスト</h2></div><span class="panel-note" id="stage-note">通常目標で +10 XP</span></div>
+        <div class="quest-columns" aria-hidden="true"><span>クエスト・Lv. <span class="column-hint">名前で詳細 ↗</span></span><span>実績 / 目標</span><span>今日の合計を入力</span></div>
+        <div id="quests" class="quest-list"><p class="empty">今日のクエストを読み込んでいます…</p></div>
+        <div class="panel-footer"><button class="text-button" id="show-rules">ルールを見る ↗</button></div>
+      </section>
+
+      <section class="panel tasks-panel" aria-labelledby="tasks-heading">
+        <div class="panel-heading"><div><span class="section-number">02</span><h2 id="tasks-heading">Todoist</h2><span class="count-badge" id="task-count">—</span></div><a href="https://app.todoist.com/app/today" target="_blank" rel="noopener noreferrer" class="text-link">Todoist を開く ↗</a></div>
+        <div class="task-toolbar"><div class="tabs" aria-label="タスクの表示範囲"><button class="active" id="view-today" aria-pressed="true">今日・期限切れ</button><button id="view-all" aria-pressed="false">取得した全件</button></div><span id="task-summary">—</span></div>
+        <div class="task-scroll" id="task-scroll" tabindex="0" aria-label="Todoistタスク一覧。スクロール中は自動切り替えを停止"><div id="tasks"><p class="empty">タスクを読み込んでいます…</p></div><details id="completed-section" class="completed-section"><summary id="completed-summary">今日の完了</summary><div id="completed-tasks"></div></details></div>
+        <div class="panel-footer rotation-footer"><span class="status-dot todoist-dot"></span><span id="rotation-status">15秒ごとに自動切替</span><button id="toggle-rotation" class="quiet-button" aria-pressed="true" aria-label="Todoistの自動切り替え">一時停止</button></div>
+      </section>
+    </div>
+    <footer class="page-footer"><span id="connection-status" role="status">Todoist と同期しています…</span><span id="day-label">Asia/Tokyo</span></footer>
+  </main>
+  <div id="action-status" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="quest-dialog" aria-labelledby="quest-dialog-title">
+    <div class="dialog-heading"><h2 id="quest-dialog-title"></h2><button class="close-dialog quiet-button" aria-label="閉じる">✕</button></div>
+    <p id="quest-description"></p><p class="dialog-targets" id="quest-targets"></p><p id="quest-growth"></p>
+    <label id="safe-field" class="check-field"><input type="checkbox" id="safe-bonus"><span>フォームを保ち、痛み・回復不足なく達成できた<small>身体項目の昇格にはこの確認が必要です。ボーナス達成日数にも反映します。</small></span></label>
+    <label class="check-field"><input type="checkbox" id="hold-growth"><span>今日は目標の増量を保留する<small>XP・GPは獲得できます。</small></span></label>
+    <p class="muted">今日の合計を入力すると達成を判定します。記録を修正したときは経験値の差分だけを反映します。</p>
+  </dialog>
+  <dialog id="rules-dialog" aria-labelledby="rules-title">
+    <div class="dialog-heading"><h2 id="rules-title">毎日のルール</h2><button class="close-dialog quiet-button" aria-label="閉じる">✕</button></div>
+    <dl class="rules">
+      <dt>日々の記録</dt><dd>今日の合計距離・回数・分数・語数を入力して「記録」を押します。右の「＋」ボタンでも少しずつ加算できます。通常目標に達すると10 XP・1 GP。日本時間の0時に翌日へ切り替わります。</dd>
+      <dt>ボーナスステージ</dt><dd>通常11項目をすべて達成すると、青い画面から赤いボーナスステージに切り替わります。表示される新しい目標も今日の合計です。追加達成で合計20 XP・2 GP。先に記録した実績も引き継ぎます。訂正で通常未達が生じた場合は通常ステージに戻り、経験値も再計算します。Todoist完了は通常11項目の達成数には含みません。</dd>
+      <dt>クエストの成長</dt><dd>20 GP以上 ＋ 現在の目標でボーナス3日を満たすと、その項目が1レベル上がります。20 GPを消費し、ボーナス日数をリセット。新しい目標は翌日から適用します。昇格は1日1回、上限到達後もXPは獲得できます。</dd>
+      <dt>無理なく続ける</dt><dd>最初の14日間は増量を保留。身体項目は名前を押してフォーム・回復状態を確認してください。全項目のボーナス達成を日課にしません。</dd>
+      <dt>時間の数え方</dt><dd>研究・起業・仕事同士で同じ時間は重複計上しません。研究に関係する英語・数理の練習は研究時間の内数にできます。</dd>
+      <dt>総合レベルとTodoist</dt><dd>総合レベルは累計100 XPごとに1上昇。Todoistの完了は1タスクにつき1日10 XPで、クエストのGPには入りません。Todoist側の完了も自動同期します。同じ日の再完了は二重加算せず、完了を取り消すと直近の獲得分を同期時に戻します。繰り返しタスクは翌日また獲得できます。</dd>
+    </dl>
+    <a id="source-link" class="source-link" target="_blank" rel="noopener noreferrer">Google Docs の設計書を開く ↗</a>
+  </dialog>
+</body>
+</html>
