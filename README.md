@@ -72,6 +72,14 @@ can leave external completions unavailable for import.
 
 The signage server uses the official Todoist REST API. A normal Todoist browser login cannot be reused by this localhost app because browser cookies and local storage are isolated by origin, so provide an API token to the Python server instead.
 
+## Install
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e .
+```
+
 ## Setup
 
 Create a local `.env` file:
@@ -87,7 +95,7 @@ TODOIST_API_TOKEN=your_todoist_api_token_here
 ## Run
 
 ```bash
-python3 rss_signage.py --refresh-seconds 60 --port 8080
+rss-signage --refresh-seconds 60 --port 8080
 ```
 
 Open:
@@ -150,6 +158,11 @@ The plist runs `rss_signage.py --refresh-seconds 60 --port 8080` from this direc
 ## Legacy RSS Scripts
 
 `rss_news.py`, `rss_feed.py`, and `feeds.txt` are still present for the old RSS CLI workflow, but the signage server now reads Todoist.
+
+```bash
+rss-news "https://feeds.bbci.co.uk/news/rss.xml" --limit 10
+rss-news "https://feeds.bbci.co.uk/news/rss.xml" --json
+```
 
 ## Verification
 

@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rss-news-signage"
+version = "0.1.0"
+description = "Track daily quests and Todoist tasks in an auto-updating dashboard, with RSS CLI tools."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [{ name = "Yasufumi Nakata" }]
+keywords = ["rss", "atom", "news", "signage", "todoist", "quests"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+]
+
+[project.scripts]
+rss-news = "rss_news:main"
+rss-signage = "rss_signage:main"
+
+[project.urls]
+Repository = "https://github.com/yasufumi-nakata/newsfeed"
+Issues = "https://github.com/yasufumi-nakata/newsfeed/issues"
+
+[tool.setuptools]
+py-modules = ["rss_feed", "rss_news", "rss_signage", "quest_store", "todoist_api"]
+packages = ["ownnewsfeed_assets"]
+package-dir = { ownnewsfeed_assets = "static" }
+
+[tool.setuptools.package-data]
+ownnewsfeed_assets = ["*.html", "*.css", "*.js"]

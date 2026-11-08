@@ -10,6 +10,7 @@ import threading
 from dataclasses import asdict
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from importlib import resources
 from pathlib import Path
 from typing import List, Optional, Tuple
 from urllib.parse import unquote, urlsplit
@@ -18,6 +19,8 @@ from todoist_api import TodoistError, TodoistTask, collect_tasks, complete_task,
 from quest_store import QuestStore, QuestConflict
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
+if not STATIC_DIR.is_dir():
+    STATIC_DIR = resources.files("ownnewsfeed_assets")
 
 
 HTML = """<!doctype html>
